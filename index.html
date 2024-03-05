@@ -102,6 +102,21 @@
         border: none;
         background: none;
     }
+
+    div.InputGroup:has(input[type="checkbox"]) {
+        display: flex;
+        flex-direction: row;
+    }
+    div.InputGroup:has(input[type="checkbox"]) label {
+        width: 100%;
+    }
+    div.InputGroup:has(input[type="checkbox"]) input {
+        width: 10%;
+    }
+
+    div.hidden {
+        visibility: hidden;
+    }
 </style>
 
 <main class="content">
@@ -134,7 +149,21 @@
             </div>
             <div class="InputGroup">
                 <label for="data-background">Data BG</label>
-                <input type="color" name="data-background" value="#f0f0f0" id="table-data-bg" />
+                <input type="color" name="data-background" value="#ffffff" id="table-data-bg" />
+            </div>
+        </div>
+        <div class="InputGroup">
+            <input type="checkbox" name="alternative-colors" id="alter-colors" checked />
+            <label for="alternative-colors">Enable Alternative</label>
+        </div>
+        <div class="Form-row" id="alter-colors-info">
+            <div class="InputGroup">
+                <label for="alter-foreground">Alternative FG</label>
+                <input type="color" name="alter-foreground" value="#000000" id="table-alter-fg" />
+            </div>
+            <div class="InputGroup">
+                <label for="alter-background">Alternative BG</label>
+                <input type="color" name="alter-background" value="#f0f0f0" id="table-alter-bg" />
             </div>
         </div>
     </form>
@@ -144,6 +173,17 @@
     </div>
 </main>
 <script>
+    const alterColors = document.getElementById("alter-colors");
+
+    alterColors.onchange = () => {
+        const alterColorsInfo = document.getElementById("alter-colors-info");
+        if (alterColors.checked === false) {
+            alterColorsInfo.classList.add("hidden");
+        } else {
+            alterColorsInfo.classList.remove("hidden");
+        }
+    };
+
     document.getElementById("create").onclick = () => {
         const cols = parseInt(document.getElementById("table-cols").value);
         const rows = parseInt(document.getElementById("table-rows").value);
@@ -153,6 +193,9 @@
 
         const dataFg = document.getElementById("table-data-fg").value;
         const dataBg = document.getElementById("table-data-bg").value;
+
+        const alterFg = document.getElementById("table-alter-fg").value;
+        const alterBg = document.getElementById("table-alter-bg").value;
 
         parent.postMessage(
             {
@@ -164,6 +207,8 @@
                     headerBg,
                     dataFg,
                     dataBg,
+                    alterFg: alterColors.checked ? alterFg : dataFg,
+                    alterBg: alterColors.checked ? alterBg : dataBg,
                 },
             },
             "*"
