@@ -1,0 +1,177 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+            Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        color: var(--figma-color-text);
+    }
+    main.content {
+        background-color: var(--figma-color-bg);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        width: 100%;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    button.primary {
+        background-color: var(--figma-color-bg-brand);
+        border: 3px solid var(--figma-color-bg-brand);
+        color: var(--figma-color-text-onbrand);
+    }
+
+    button.primary:hover {
+        background-color: var(--figma-color-bg-brand-hover);
+        border: 3px solid var(--figma-color-bg-brand-hover);
+    }
+
+    button.secondary {
+        background-color: var(--figma-color-bg);
+        border: 3px solid var(--figma-color-bg-danger);
+
+        color: var(--figma-color-bg-danger);
+    }
+
+    button.secondary:hover {
+        background-color: var(--figma-color-bg-danger);
+        border: 3px solid var(--figma-color-bg-danger);
+
+        color: var(--figma-color-text-ondanger);
+    }
+
+    div.buttonGroup {
+        display: inline-block;
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+
+    form div.Form-row {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    div.InputGroup {
+        display: flex;
+        flex-direction: column;
+        font-size: 1rem;
+        font-weight: bold;
+        width: 100%;
+    }
+
+    div.InputGroup input {
+        font-size: 1rem;
+        border-radius: 3px;
+        border: none;
+        border-bottom: 3px solid var(--figma-color-text);
+        outline: none;
+        width: 100%;
+    }
+
+    div.InputGroup input:hover {
+        font-size: 1rem;
+        border-radius: 3px;
+        border: none;
+        border-color: 3px solid var(--figma-color-bg-brand);
+    }
+
+    div.InputGroup input[type="color"] {
+        border: none;
+        background: none;
+    }
+</style>
+
+<main class="content">
+    <h2>✨MAGIC TABLES✨</h2>
+    <form class="Form">
+        <div class="Form-row">
+            <div class="InputGroup">
+                <label for="columns">Columns</label>
+                <input type="number" name="columns" min="1" value="5" id="table-cols" />
+            </div>
+            <div class="InputGroup">
+                <label for="Rows">Rows</label>
+                <input type="number" name="Rows" min="1" value="5" id="table-rows" />
+            </div>
+        </div>
+        <div class="Form-row">
+            <div class="InputGroup">
+                <label for="header-foreground">Header FG</label>
+                <input type="color" name="header-foreground" value="#ffffff" id="table-header-fg" />
+            </div>
+            <div class="InputGroup">
+                <label for="header-background">Header BG</label>
+                <input type="color" name="header-background" value="#0d99ff" id="table-header-bg" />
+            </div>
+        </div>
+        <div class="Form-row">
+            <div class="InputGroup">
+                <label for="data-foreground">Data FG</label>
+                <input type="color" name="data-foreground" value="#000000" id="table-data-fg" />
+            </div>
+            <div class="InputGroup">
+                <label for="data-background">Data BG</label>
+                <input type="color" name="data-background" value="#f0f0f0" id="table-data-bg" />
+            </div>
+        </div>
+    </form>
+    <div class="buttonGroup">
+        <button class="secondary" id="cancel">Cancel</button>
+        <button class="primary" id="create">Create</button>
+    </div>
+</main>
+<script>
+    document.getElementById("create").onclick = () => {
+        const cols = parseInt(document.getElementById("table-cols").value);
+        const rows = parseInt(document.getElementById("table-rows").value);
+
+        const headerFg = document.getElementById("table-header-fg").value;
+        const headerBg = document.getElementById("table-header-bg").value;
+
+        const dataFg = document.getElementById("table-data-fg").value;
+        const dataBg = document.getElementById("table-data-bg").value;
+
+        parent.postMessage(
+            {
+                pluginMessage: {
+                    type: "Create-Table",
+                    cols,
+                    rows,
+                    headerFg,
+                    headerBg,
+                    dataFg,
+                    dataBg,
+                },
+            },
+            "*"
+        );
+    };
+
+    document.getElementById("cancel").onclick = () => {
+        parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
+    };
+</script>
+

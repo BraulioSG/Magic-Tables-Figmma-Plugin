@@ -1,0 +1,15 @@
+{
+    "name": "Magic Tables",
+    "id": "1346634680535294032",
+    "api": "1.0.0",
+    "main": "code.js",
+    "capabilities": [],
+    "enableProposedApi": false,
+    "editorType": ["figma"],
+    "ui": "index.html",
+    "networkAccess": {
+        "allowedDomains": ["none"]
+    },
+    "documentAccess": "dynamic-page"
+}
+
