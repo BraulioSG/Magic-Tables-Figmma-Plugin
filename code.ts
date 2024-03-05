@@ -1,4 +1,5 @@
 figma.showUI(__html__, { themeColors: true });
+figma.ui.resize(500, 500);
 
 //Loads the fonts
 (async () => {
@@ -46,16 +47,16 @@ interface tableProps {
     headerFg: string; //header foreground
     dataBg: string; //data background
     dataFg: string; //data foreground
+    alterFg: string; //alternative color
+    alterBg: string; //alternative color
 }
 
 figma.ui.onmessage = (msg: tableProps) => {
-    const { type, cols, rows, headerBg, headerFg, dataBg, dataFg } = msg;
+    const { type, cols, rows, headerBg, headerFg, dataBg, dataFg, alterBg, alterFg } = msg;
     if (type !== "Create-Table") {
         figma.closePlugin();
         return;
     }
-
-    console.log(msg);
 
     const nodes: SceneNode[] = [];
 
@@ -80,7 +81,9 @@ figma.ui.onmessage = (msg: tableProps) => {
 
     //Filling data
     for (let row = 1; row <= rows; row++) {
-        const dataRow = generateTableRow(cols, dataFg, dataBg);
+        const foreground = row % 2 !== 0 ? dataFg : alterFg;
+        const background = row % 2 !== 0 ? dataBg : alterBg;
+        const dataRow = generateTableRow(cols, foreground, background);
         dataRow.name = `Row ${row}`;
         data.appendChild(dataRow);
     }

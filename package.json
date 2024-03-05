@@ -1,7 +1,7 @@
 {
-    "name": "Magic-Tables",
+    "name": "magic-tables",
     "version": "1.0.0",
-    "description": "Your Figma Plugin",
+    "description": "Creation of tables fast an easy",
     "main": "code.js",
     "scripts": {
         "build": "tsc -p tsconfig.json",
@@ -9,7 +9,7 @@
         "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix .",
         "watch": "npm run build -- --watch"
     },
-    "author": "",
+    "author": "Braulio Solorio",
     "license": "",
     "devDependencies": {
         "@figma/eslint-plugin-figma-plugins": "*",
